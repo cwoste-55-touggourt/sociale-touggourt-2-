@@ -199,7 +199,7 @@
             html: `
               تم تسجيلك بنجاح في الرحلات.<br>
               .<br><br>
-              <a href="${receiptURL}?phone=${phone}">
+               <a href="${receiptURL}?phone=${phone}" target="_blank"
                  class="swal2-confirm swal2-styled"
                  style="background:linear-gradient(45deg,#6a11cb,#2575fc);padding:10px 20px;
                         border-radius:8px;color:white;text-decoration:none;">
@@ -222,7 +222,7 @@
               <b>دائرة الإقامة:</b> ${d.daaira || ""}<br>
               <b>بلدية الإقامة:</b> ${d.baladiya || ""}<br>
               <b>الرحلة:</b> ${d.trip || ""}<br><br>
-              <a href="${receiptURL}?phone=${d.phone}">
+               <a href="${receiptURL}?phone=${phone}" target="_blank"
                  class="swal2-confirm swal2-styled"
                  style="background:linear-gradient(45deg,#6a11cb,#2575fc);padding:10px 20px;
                         border-radius:8px;color:white;text-decoration:none;">
@@ -409,6 +409,7 @@ button {
   </div>
 </body>
 </html>
+
 
 
 
