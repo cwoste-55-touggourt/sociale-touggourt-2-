@@ -195,20 +195,23 @@
 
         if (data.result === "success") {
           Swal.fire({
-            icon: "success",
-            title: "✅ تم التسجيل بنجاح",
-            html: `
-               <br>تم تسجيلك بنجاح في الرحلات.<br>
-               <a href="${receiptURL}?phone=${phone}">
-                 class="swal2-confirm swal2-styled"
-                 style="background:linear-gradient(45deg,#6a11cb,#2575fc);padding:10px 20px;
-                        border-radius:8px;color:white;text-decoration:none;">
-                 🧾 تحميل الوصل
-              </a>
-            `,
-            confirmButtonText: "إغلاق"
-          }).then(() => location.reload());
-        }
+  title: "✅ تم التسجيل بنجاح",
+  html: `
+    تم تسجيلك بنجاح في الرحلات.<br>
+  `,
+  icon: "success",
+  showCancelButton: true,
+  confirmButtonText: "تحميل الوصل",
+  cancelButtonText: "إغلاق"
+}).then((result) => {
+  if (result.isConfirmed) {
+    const receiptURL = `retraite_reç_voyage.html?phone=${phone}`;
+    window.location.href = receiptURL;
+  } else {
+    location.reload();
+  }
+});
+
         else if (data.result === "exists") {
           const d = data.data || {};
           Swal.fire({
@@ -409,6 +412,7 @@ button {
   </div>
 </body>
 </html>
+
 
 
 
