@@ -142,7 +142,7 @@
       اللجنة الولائية للخدمات الاجتماعية لعمال التربية لولاية توقرت
     </div>
 
-    <h1>تحميل وصل تسجيل الرحلات</h1>
+    <h1>تحميل وصل تسجيل المتقاعدين و الأرامل في الرحلات</h1>
 
     <!-- ✅ تم تعديل الاسم فقط من empId إلى phone -->
     <input type="text" id="phone" placeholder="أدخل رقم الهاتف">
@@ -176,7 +176,7 @@
       if (!data.found) {
         Swal.fire({
           icon: "error",
-          title: "لم يتم العثور على تسجيل",
+          title: "لم يتم العثور على التسجيل",
           text: "رقم الهاتف الذي أدخلته غير موجود في تسجيلات الرحلات لسنة 2025."
         });
         return;
@@ -209,7 +209,7 @@ if (d.date) {
 
 
      Swal.fire({
-  title: "✅ التسجيل موجود",
+  title: "✅ تم تأكيد التسجيل",
   html: `
     <div style="text-align:right;font-family:'Cairo',sans-serif;direction:rtl;">
       <p><b>اللقب والإسم:</b> ${d.name}</p>
@@ -268,6 +268,7 @@ if (d.date) {
   </script>
 </body>
 </html>
+
 
 
 
