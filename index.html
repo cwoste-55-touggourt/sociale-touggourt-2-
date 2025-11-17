@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -320,7 +321,7 @@
     "الرحلات": true,
     "المخيمات": false,
     "استمارات الخدمات": true,
-    "السلف الإجتماعية": false,
+    "السلف الإجتماعية": true,
     "الضوابط العامة": true
   };
 
@@ -360,7 +361,22 @@
       window.open('https://drive.google.com/file/d/1kMa5_uUT0ZW-TnC6u6T2IBNSJhRcwlFw/view?usp=sharing', '_blank');
     } 
     else if (serviceType === "السلف الإجتماعية") {
-      window.open('صفحة_السلف.html', '_blank');
+      Swal.fire({
+        title: `اختر نوع السلفة المناسبة للتسجيل في ${serviceType}`,
+        html: `
+          <div class="icon-container">
+            <div class="icon-btn employee" onclick="goToPage('${serviceType}', 'housing')">
+              <i class="fa-solid fa-home"></i>
+              <span>سلفة السكن</span>
+            </div>
+            <div class="icon-btn retired" onclick="goToPage('${serviceType}', 'exceptional')">
+              <i class="fa-solid fa-sack-dollar"></i>
+              <span>السلفة الإستثنائية</span>
+            </div>
+          </div>
+        `,
+        showConfirmButton: false
+      });
     } 
     else if (serviceType === "الضوابط العامة") {
       window.open('https://drive.google.com/file/d/1GeIhUKVCZPHAOzb8jguj5OcDllh_bMbv/view?usp=sharing', '_blank');
@@ -399,8 +415,16 @@
       link = category === 'employees'
         ? 'رابط_صفحة_المخيمات_الموظفين.html'
         : 'رابط_صفحة_المخيمات_المتقاعدين.html';
+    } else if (serviceType === 'السلف الإجتماعية') {
+      if (category === 'housing') {
+        link = 'صفحة_السلف.html'; // رابط سلفة السكن
+      } else if (category === 'exceptional') {
+        link = 'credit_exceptionel.html'; // رابط السلفة الإستثنائية
+      }
     }
-    window.location.href = link;
+    if (link) {
+      window.location.href = link;
+    }
   }
 </script>
 
