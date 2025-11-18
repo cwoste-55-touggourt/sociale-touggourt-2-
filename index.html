@@ -261,6 +261,125 @@
   .service {
     position: relative;
   }
+
+    .housing-alert {
+      text-align: right;
+      line-height: 1.9;
+      font-size: 15px;
+      background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 80%);
+      border: 1px solid #90caf9;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(25, 118, 210, 0.15);
+      color: #0d1b2a;
+    }
+
+    .housing-alert .alert-header {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: rgba(25, 118, 210, 0.08);
+      margin-bottom: 14px;
+    }
+
+    .housing-alert .alert-header h4 {
+      margin: 0;
+      font-size: 18px;
+      color: #0d47a1;
+      font-weight: 700;
+    }
+
+    .housing-alert .alert-header p {
+      margin: 2px 0 0;
+      font-size: 14px;
+      color: #1565c0;
+      font-weight: 600;
+    }
+
+    .housing-alert .alert-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: #f57f17;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .housing-alert .alert-points {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .housing-alert .alert-points li {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(25, 118, 210, 0.05);
+      font-weight: 600;
+      color: #0d1b2a;
+    }
+
+    .housing-alert .alert-points li i {
+      color: #1976d2;
+      font-size: 18px;
+      margin-top: 4px;
+    }
+
+    .housing-alert .alert-note {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(229, 57, 53, 0.08);
+      border: 1px solid rgba(229, 57, 53, 0.2);
+      color: #b71c1c;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .housing-alert .alert-note i {
+      font-size: 18px;
+    }
+
+    .acknowledge-box {
+      display: inline-flex;
+      justify-content: flex-start;
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      margin-top: 10px;
+      border: 1px solid #1976d2;
+      border-radius: 10px;
+      background: #e3f2fd;
+      font-weight: 700;
+      color: #0d47a1;
+    }
+
+    .acknowledge-box input {
+      width: 18px;
+      height: 18px;
+    }
+
+    .acknowledge-box span {
+      font-size: 14px;
+    }
     
   </style>
 </head>
@@ -321,7 +440,7 @@
     "الرحلات": true,
     "المخيمات": false,
     "استمارات الخدمات": true,
-    "السلف الإجتماعية": false,
+    "السلف الإجتماعية": true,
     "الضوابط العامة": true
   };
 
@@ -417,9 +536,144 @@
         : 'رابط_صفحة_المخيمات_المتقاعدين.html';
     } else if (serviceType === 'السلف الإجتماعية') {
       if (category === 'housing') {
-        link = 'credit_logement.html'; // رابط سلفة السكن
+        Swal.fire({
+          icon: 'warning',
+          title: 'تنبيه مهم - سلفة السكن',
+          html: `
+            <div class="housing-alert">
+              <div class="alert-header">
+                <div class="alert-icon">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div>
+                  <h4>تنبيه خاص بسلفة السكن</h4>
+                  <p>يرجى قراءة الشروط التالية بعناية قبل المتابعة</p>
+                </div>
+              </div>
+              <ul class="alert-points">
+                <li>
+                  <i class="fa-solid fa-circle-check"></i>
+                  سلفة السكن تُمنح مرة واحدة فقط خلال المسار المهني للموظف.
+                </li>
+                <li>
+                  <i class="fa-solid fa-user-slash"></i>
+                  يستبعد تلقائياً كل مترشح سبق له الاستفادة من هذه السلفة.
+                </li>
+                <li>
+                  <i class="fa-solid fa-circle-exclamation"></i>
+                  أي تصريح غير صحيح للمعلومات يعتبر إدلاءً بمعلومات مغلوطة ويترتب عنه الإقصاء الفوري ودون إنذار.
+                </li>
+              </ul>
+              <div class="alert-note">
+                <i class="fa-solid fa-shield"></i>
+                <span>الاطلاع على هذه الشروط شرط أساسي قبل المرور إلى استمارة التسجيل.</span>
+              </div>
+              <label class="acknowledge-box">
+                <input type="checkbox" id="housingAcknowledged">
+                <span>اطلعت عليه وأتحمل مسؤولية صحة المعلومات التي أصرح بها.</span>
+              </label>
+            </div>
+          `,
+          confirmButtonText: 'متابعة',
+          confirmButtonColor: '#1976d2',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          focusConfirm: false,
+          customClass: {
+            confirmButton: 'cairo-btn highlight-confirm'
+          },
+          didOpen: () => {
+            const checkbox = Swal.getPopup().querySelector('#housingAcknowledged');
+            const confirmButton = Swal.getConfirmButton();
+            confirmButton.disabled = true;
+            checkbox.addEventListener('change', () => {
+              confirmButton.disabled = !checkbox.checked;
+            });
+          },
+          preConfirm: () => {
+            const checkbox = Swal.getPopup().querySelector('#housingAcknowledged');
+            if (!checkbox || !checkbox.checked) {
+              Swal.showValidationMessage('يجب تأكيد الاطلاع قبل المتابعة');
+              return false;
+            }
+            return true;
+          }
+        }).then(result => {
+          if (result.isConfirmed) {
+            window.location.href = 'credit_logement.html';
+          }
+        });
+        return;
+        return;
       } else if (category === 'exceptional') {
-        link = 'credit_exceptionel.html'; // رابط السلفة الإستثنائية
+        Swal.fire({
+          icon: 'warning',
+          title: 'تنبيه مهم - السلفة الإستثنائية',
+          html: `
+            <div class="housing-alert">
+              <div class="alert-header">
+                <div class="alert-icon">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div>
+                  <h4>تنبيه خاص بالسلفة الإستثنائية</h4>
+                  <p>يرجى قراءة الشروط التالية بعناية قبل المتابعة</p>
+                </div>
+              </div>
+              <ul class="alert-points">
+                <li>
+                  <i class="fa-solid fa-circle-check"></i>
+                  السلفة الإستثنائية تمنح وفق شروط صارمة وبصفة محددة خلال المسار المهني.
+                </li>
+                <li>
+                  <i class="fa-solid fa-user-slash"></i>
+                  يستبعد تلقائياً كل مترشح سبق له الاستفادة من هذا النوع من السلف.
+                </li>
+                <li>
+                  <i class="fa-solid fa-circle-exclamation"></i>
+                  أي تصريح غير صحيح للمعلومات يعتبر إدلاءً بمعلومات مغلوطة ويترتب عنه الإقصاء الفوري ودون إنذار.
+                </li>
+              </ul>
+              <div class="alert-note">
+                <i class="fa-solid fa-shield"></i>
+                <span>الاطلاع على هذه الشروط شرط أساسي قبل المرور إلى استمارة التسجيل.</span>
+              </div>
+              <label class="acknowledge-box">
+                <input type="checkbox" id="exceptionAcknowledged">
+                <span>اطلعت عليه وأتحمل مسؤولية صحة المعلومات التي أصرح بها.</span>
+              </label>
+            </div>
+          `,
+          confirmButtonText: 'متابعة',
+          confirmButtonColor: '#1976d2',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          focusConfirm: false,
+          customClass: {
+            confirmButton: 'cairo-btn highlight-confirm'
+          },
+          didOpen: () => {
+            const checkbox = Swal.getPopup().querySelector('#exceptionAcknowledged');
+            const confirmButton = Swal.getConfirmButton();
+            confirmButton.disabled = true;
+            checkbox.addEventListener('change', () => {
+              confirmButton.disabled = !checkbox.checked;
+            });
+          },
+          preConfirm: () => {
+            const checkbox = Swal.getPopup().querySelector('#exceptionAcknowledged');
+            if (!checkbox || !checkbox.checked) {
+              Swal.showValidationMessage('يجب تأكيد الاطلاع قبل المتابعة');
+              return false;
+            }
+            return true;
+          }
+        }).then(result => {
+          if (result.isConfirmed) {
+            window.location.href = 'credit_exceptionel.html'; // رابط السلفة الإستثنائية
+          }
+        });
+        return;
       }
     }
     if (link) {
@@ -433,12 +687,19 @@
     font-family: 'Cairo', sans-serif !important;
     font-weight: 600;
   }
+
+  .swal2-confirm.cairo-btn.highlight-confirm {
+    font-size: 18px;
+    letter-spacing: 0.4px;
+    padding: 12px 32px;
+    border-radius: 999px;
+    text-transform: none;
+    box-shadow: 0 8px 20px rgba(25, 118, 210, 0.3);
+  }
 </style>
 
 </body>
 </html>
-
-
 
 
 
