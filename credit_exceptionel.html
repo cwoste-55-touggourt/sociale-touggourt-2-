@@ -448,7 +448,12 @@ async function checkEmployee() {
 
     if (!docSnap.exists) {
       Swal.close();
-      Swal.fire("❌ خطأ", "رقم الموظف غير موجود في قاعدة البيانات", "error");
+    Swal.fire(
+  "❌ خطأ",
+  "رقم الموظف غير موجود في قاعدة البيانات.\n\nملاحظة: في حالة كان رقم تعريف الموظف صحيحًا وظهرت هذه الرسالة، وكان رقم الموظف ينتهي بالرقم (1)، يجب استبدال الرقم 1 بالرقم 0 فقط وستنجح العملية.",
+  "error"
+);
+;
       return;
     }
 
@@ -546,10 +551,9 @@ async function checkEmployee() {
         title: "✅ تم التحقق بنجاح",
         html: `
           <b>الاسم واللقب:</b> ${escapeHtml(data.name)}<br>
-          <b>تاريخ الميلاد:</b> ${escapeHtml(formatToDayMonthYear(data.diz || ''))}<br>
           <b>الرتبة:</b> ${escapeHtml(data.grade)}<br>
           <b>مكان العمل:</b> ${escapeHtml(data.place)}<br>
-          <b>تاريخ التوظيف:</b> ${escapeHtml(formatToDayMonthYear(data.dtw || ''))}
+          
         `,
         icon: "success",
         confirmButtonText: "متابعة التسجيل"
@@ -847,7 +851,7 @@ function buildLoanFormTemplate({ title, personData, buttonText }) {
 
     <div class="row">
       <div class="col">
-        <label for="daairaField">الدائرة</label>
+        <label for="daairaField">دائرة العمل</label>
         <select id="daairaField">
           <option value="">اختر الدائرة</option>
           <option value="توقرت">توقرت</option>
@@ -858,7 +862,7 @@ function buildLoanFormTemplate({ title, personData, buttonText }) {
         </select>
       </div>
       <div class="col">
-        <label for="baladiyaField">البلدية</label>
+        <label for="baladiyaField">بلدية العمل</label>
     <select id="baladiyaField">
       <option value="">اختر البلدية</option>
     </select>
@@ -905,7 +909,7 @@ function buildLoanFormTemplate({ title, personData, buttonText }) {
 
     <div class="row">
       <div class="col">
-        <label for="fileSeniorityField">أقدمية الملف</label>
+        <label for="fileSeniorityField">أقدمية الملف (إن كنت قدمت ملف ولم تستفد)</label>
         <select id="fileSeniorityField">
           <option value="">اختر خيارًا</option>
           <option value="لا">لا</option>
@@ -913,14 +917,14 @@ function buildLoanFormTemplate({ title, personData, buttonText }) {
         </select>
       </div>
       <div class="col" id="depositCountWrapper" style="display:none;">
-        <label for="depositCountField">عدد مرات الإيداع</label>
+        <label for="depositCountField">عدد مرات إيداع الملف</label>
         <input type="number" id="depositCountField" min="1" placeholder="أدخل العدد">
       </div>
     </div>
     <div id="depositYearWrapper" class="deposit-year-block" style="display:none;">
       <label for="depositYearSelect">سنة جديدة لإضافتها</label>
       <select id="depositYearSelect">
-        <option value="">اختر السنة</option>
+        <option value="">اختر سنة الإيداع (يمكنك اختيار أكثر من سنة)</option>
         <option value="2020">2020</option>
         <option value="2021">2021</option>
         <option value="2022">2022</option>
@@ -929,8 +933,8 @@ function buildLoanFormTemplate({ title, personData, buttonText }) {
         <option value="2025">2025</option>
       </select>
       <div id="depositYearTags" class="deposit-tags"></div>
-      <label for="depositYearField" class="selected-years-label">السنوات المختارة</label>
-      <input type="text" id="depositYearField" readonly placeholder="لم يتم اختيار سنة بعد">
+      <label for="depositYearField" class="selected-years-label">سنوات الإيداع المختارة</label>
+      <input type="text" id="depositYearField" readonly placeholder="لم يتم اختيار السنة بعد">
       <div class="small-note" style="margin-top:6px;">اضغط على السنة لحذفها أو أضف سنة جديدة من القائمة</div>
     </div>
 
@@ -2387,5 +2391,6 @@ async function deleteRegistration(empId) {
 </script>
 </body>
 </html>
+
 
 
