@@ -448,7 +448,50 @@ async function checkEmployee() {
 
     if (!docSnap.exists) {
       Swal.close();
-      Swal.fire("❌ خطأ", "رقم الموظف غير موجود في قاعدة البيانات", "error");
+      Swal.fire({
+  icon: "error",
+  title: "❌ خطأ",
+  html: `
+    رقم الموظف غير موجود في قاعدة البيانات.<br><br>
+
+    <style>
+      /* وميض بسيط */
+      @keyframes softBlink {
+        0% { opacity: 1; }
+        50% { opacity: 0.65; }
+        100% { opacity: 1; }
+      }
+
+      .note-blink {
+        animation: softBlink 1.6s infinite ease-in-out;
+      }
+    </style>
+
+    <div class="note-blink" style="
+      padding: 15px;
+      background: linear-gradient(135deg, #ffe6e6 0%, #fff0f0 100%);
+      color: #d00000;
+      border: 2px solid #d00000;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(208, 0, 0, 0.2);
+      font-weight: bold;
+      font-size: 15px;
+      text-align: center; /* ← وضع النص في الوسط */
+      line-height: 1.7;
+    ">
+      <span style="color:#d00000; font-size:16px;">ملاحظة مهمة:</span>
+      <br>
+      إذا كان رقم تعريف الموظف صحيحًا وظهرت هذه الرسالة، وكان رقم الموظف ينتهي بالرقم 
+      <strong style="color:#b00000;">1</strong>،<br>
+      يجب استبدال الرقم 
+      <strong style="color:#b00000;">1</strong> 
+      بالرقم 
+      <strong style="color:#b00000;">0</strong>
+      فقط وستنجح العملية.
+    </div>
+  `
+});
+
       return;
     }
 
@@ -847,7 +890,7 @@ function buildLoanFormTemplate({ title, personData, buttonText }) {
 
     <div class="row">
       <div class="col">
-        <label for="daairaField">الدائرة</label>
+        <label for="daairaField">دائرة العمل</label>
         <select id="daairaField">
           <option value="">اختر الدائرة</option>
           <option value="توقرت">توقرت</option>
@@ -858,7 +901,7 @@ function buildLoanFormTemplate({ title, personData, buttonText }) {
         </select>
       </div>
       <div class="col">
-        <label for="baladiyaField">البلدية</label>
+        <label for="baladiyaField">بلدية العمل</label>
     <select id="baladiyaField">
       <option value="">اختر البلدية</option>
     </select>
@@ -905,7 +948,7 @@ function buildLoanFormTemplate({ title, personData, buttonText }) {
 
     <div class="row">
       <div class="col">
-        <label for="fileSeniorityField">أقدمية الملف</label>
+        <label for="fileSeniorityField">أقدمية الملف (هل أودعت ملف ولم تستفد)</label>
         <select id="fileSeniorityField">
           <option value="">اختر خيارًا</option>
           <option value="لا">لا</option>
@@ -913,14 +956,14 @@ function buildLoanFormTemplate({ title, personData, buttonText }) {
         </select>
       </div>
       <div class="col" id="depositCountWrapper" style="display:none;">
-        <label for="depositCountField">عدد مرات الإيداع</label>
+        <label for="depositCountField">عدد مرات إيداع الملف</label>
         <input type="number" id="depositCountField" min="1" placeholder="أدخل العدد">
       </div>
     </div>
     <div id="depositYearWrapper" class="deposit-year-block" style="display:none;">
       <label for="depositYearSelect">سنة جديدة لإضافتها</label>
       <select id="depositYearSelect">
-        <option value="">اختر السنة</option>
+        <option value="">اختر سنة الإيداع (يمكنك اختيار أكثر من سنة)</option>
         <option value="2020">2020</option>
         <option value="2021">2021</option>
         <option value="2022">2022</option>
@@ -929,7 +972,7 @@ function buildLoanFormTemplate({ title, personData, buttonText }) {
         <option value="2025">2025</option>
       </select>
       <div id="depositYearTags" class="deposit-tags"></div>
-      <label for="depositYearField" class="selected-years-label">السنوات المختارة</label>
+      <label for="depositYearField" class="selected-years-label">سنوات الإيداع المختارة</label>
       <input type="text" id="depositYearField" readonly placeholder="لم يتم اختيار سنة بعد">
       <div class="small-note" style="margin-top:6px;">اضغط على السنة لحذفها أو أضف سنة جديدة من القائمة</div>
     </div>
@@ -2387,5 +2430,6 @@ async function deleteRegistration(empId) {
 </script>
 </body>
 </html>
+
 
 
