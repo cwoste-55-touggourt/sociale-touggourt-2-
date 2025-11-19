@@ -2193,9 +2193,9 @@ if (data.result === "success") {
     title: isEditMode ? "✅ تم حفظ التعديلات بنجاح" : "✅ تم التسجيل بنجاح",
     html: `
       <p style="margin-bottom:12px;">
-        ${isEditMode ? "تم تحديث بياناتك في قائمة تسجيلات السلفة السكن بنجاح" : "تم تسجيل بياناتك في قائمة تسجيلات السلفة السكن بنجاح"}
+        ${isEditMode ? "تم تحديث بياناتك في قائمة تسجيلات سلفة السكن بنجاح" : "تم تسجيل بياناتك في قائمة تسجيلات السلفة السكن بنجاح"}
       </p>
-      <button type="button" class="receipt-download-btn" id="${receiptButtonId}">تحميل وصل التسجيل</button>
+      <button type="button" class="receipt-download-btn" id="${receiptButtonId}">تحميل وصل التسجيل الجديد</button>
     `,
     icon: "success",
     confirmButtonText: "إغلاق",
@@ -2428,6 +2428,7 @@ async function deleteRegistration(empId) {
 </script>
 </body>
 </html>
+
 
 
 
