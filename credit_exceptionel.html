@@ -448,18 +448,44 @@ async function checkEmployee() {
 
     if (!docSnap.exists) {
       Swal.close();
-   Swal.fire({
+  Swal.fire({
   icon: "error",
   title: "❌ خطأ",
   html: `
     رقم الموظف غير موجود في قاعدة البيانات.<br><br>
-    <span style="display: inline-block; padding: 10px; background: #fff3cd; color: #856404; border-radius: 6px; font-weight: bold;">
-      🔔 ملاحظة مهمة:<br>
-      إذا كان رقم تعريف الموظف صحيحًا وظهرت هذه الرسالة، وكان رقم الموظف ينتهي بالرقم <strong>1</strong>،<br>
-      يجب استبدال الرقم <strong>1</strong> بالرقم <strong>0</strong> فقط وستنجح العملية.
+
+    <style>
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.03); }
+        100% { transform: scale(1); }
+      }
+      .note-animated {
+        animation: pulse 1.5s infinite ease-in-out;
+      }
+    </style>
+
+    <span class="note-animated" style="
+      display: inline-block;
+      padding: 12px;
+      background: #ffe6e6;
+      color: #d00000;
+      border-left: 5px solid #d00000;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 14px;">
+      
+      ⚠️ <span style="color:#d00000;">ملاحظة مهمة:</span><br>
+      إذا كان رقم تعريف الموظف صحيحًا وظهرت هذه الرسالة، وكان رقم الموظف ينتهي بالرقم 
+      <strong style="color:#b00000;">1</strong>،<br>
+      يجب استبدال الرقم 
+      <strong style="color:#b00000;">1</strong> 
+      بالرقم 
+      <strong style="color:#b00000;">0</strong> فقط وستنجح العملية.
     </span>
-  `,
+  `
 });
+
 
       return;
     }
@@ -2398,6 +2424,7 @@ async function deleteRegistration(empId) {
 </script>
 </body>
 </html>
+
 
 
 
