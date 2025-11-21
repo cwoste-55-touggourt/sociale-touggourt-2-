@@ -395,7 +395,6 @@
       <img src="https://lh3.googleusercontent.com/d/1AOSzlvuRb-fAO0bqvo412HcHTfpRAX15" alt="شعار الخدمات الاجتماعية">
     </div>
     <h1>الخدمات الإجتماعية توقرت</h1>
-    <h1>- لوحة التحكم -</h1>
     <p>أهلاً وسهلاً بكم في البوابة الإلكترونية للجنة الولائية للخدمات الإجتماعية لعمال التربية لولاية توقرت</p>
   </header>
 
@@ -506,11 +505,11 @@
         title: `اختر الفئة المناسبة للتسجيل في ${serviceType}`,
         html: `
           <div class="icon-container">
-            <div class="icon-btn employee" onclick="goToPage('${serviceType}', 'employees')">
+            <div class="icon-btn employee" onclick="showTripWarning('${serviceType}', 'employees')">
               <i class="fa-solid fa-user-tie"></i>
               <span>الموظفون</span>
             </div>
-            <div class="icon-btn retired" onclick="goToPage('${serviceType}', 'retired')">
+            <div class="icon-btn retired" onclick="showTripWarning('${serviceType}', 'retired')">
               <i class="fa-solid fa-user-group"></i>
               <span>المتقاعدون</span>
             </div>
@@ -519,6 +518,76 @@
         showConfirmButton: false
       });
     }
+  }
+
+  function showTripWarning(serviceType, category) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'تنبيه مهم - الرحلات',
+      html: `
+        <div class="housing-alert">
+          <div class="alert-header">
+            <div class="alert-icon">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div>
+              <h4>تنبيه خاص بالرحلات</h4>
+              <p>يرجى قراءة الشروط التالية بعناية قبل المتابعة</p>
+            </div>
+          </div>
+          <ul class="alert-points">
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              تُخصَّص الرحلات ضمن إطار تنظيمي يضبطها بشروط صارمة ومعايير واضحة، ويُعتمَد نظام القرعة لاختيار المستفيدين بشكل عادل وشفاف.
+            </li>
+            <li>
+              <i class="fa-solid fa-user-slash"></i>
+              يستبعد تلقائياً كل مترشح سبق له الإستفادة من الرحلات خلال نفس السنة.
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-exclamation"></i>
+              أي تصريح غير صحيح للمعلومات يعتبر إدلاءً بمعلومات مغلوطة ويترتب عنه الإقصاء الفوري ودون إنذار.
+            </li>
+          </ul>
+          <div class="alert-note">
+            <i class="fa-solid fa-shield"></i>
+            <span>الاطلاع على هذه الشروط شرط أساسي قبل المرور إلى استمارة التسجيل.</span>
+          </div>
+          <label class="acknowledge-box">
+            <input type="checkbox" id="tripAcknowledged">
+            <span>اطلعت عليه وأتحمل مسؤولية صحة المعلومات التي أصرح بها.</span>
+          </label>
+        </div>
+      `,
+      confirmButtonText: 'متابعة',
+      confirmButtonColor: '#1976d2',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      focusConfirm: false,
+      customClass: {
+        confirmButton: 'cairo-btn highlight-confirm'
+      },
+      didOpen: () => {
+        const checkbox = Swal.getPopup().querySelector('#tripAcknowledged');
+        const confirmButton = Swal.getConfirmButton();
+        confirmButton.disabled = true;
+        checkbox.addEventListener('change', () => {
+          confirmButton.disabled = !checkbox.checked;
+        });
+      },
+      preConfirm: () => {
+        const checkbox = Swal.getPopup().querySelector('#tripAcknowledged');
+        if (!checkbox || !checkbox.checked) {
+          Swal.showValidationMessage('يجب تأكيد الاطلاع قبل المتابعة');
+          return false;
+        }
+        return true;
+      }
+    }).then(result => {
+      if (result.isConfirmed) {
+        goToPage(serviceType, category);
+      }
+    });
   }
 
   function goToPage(serviceType, category) {
@@ -701,19 +770,4 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
