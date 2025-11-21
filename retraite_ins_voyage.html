@@ -486,7 +486,7 @@ async function checkEmployee() {
 
   } catch (err) {
     Swal.close();
-    Swal.fire("❌ خطأ", "تعذر التحقق من التسجيلات السابقة", "error");
+    Swal.fire("❌ خطأ", "تعذر التحقق أعد المحاولة من جديد", "error");
     console.error("check_existing error:", err);
   }
 }
@@ -2104,7 +2104,7 @@ async function submitNewForm() {
   // التحقق من التسجيلات المتكررة قبل الإرسال (فقط في وضع التسجيل الجديد)
   if (!isEditMode) {
     Swal.fire({ 
-      title: 'جاري التحقق ...', 
+      title: 'جاري التحقق...', 
       allowOutsideClick: false, 
       didOpen: () => Swal.showLoading() 
     });
@@ -2867,6 +2867,7 @@ async function deleteRegistrationByPhone(phoneDigits) {
 </script>
 </body>
 </html>
+
 
 
 
