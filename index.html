@@ -395,7 +395,6 @@
       <img src="https://lh3.googleusercontent.com/d/1AOSzlvuRb-fAO0bqvo412HcHTfpRAX15" alt="شعار الخدمات الاجتماعية">
     </div>
     <h1>الخدمات الإجتماعية توقرت</h1>
-    <h1>- لوحة التحكم -</h1>
     <p>أهلاً وسهلاً بكم في البوابة الإلكترونية للجنة الولائية للخدمات الإجتماعية لعمال التربية لولاية توقرت</p>
   </header>
 
@@ -437,11 +436,11 @@
 
 <script>
   const registrationStatus = {
-    "العمرة": false,
+    "العمرة": true,
     "الرحلات": true,
     "المخيمات": false,
     "استمارات الخدمات": true,
-    "السلف الإجتماعية": true,
+    "السلف الإجتماعية": false,
     "الضوابط العامة": true
   };
 
@@ -501,6 +500,24 @@
     else if (serviceType === "الضوابط العامة") {
       window.open('https://drive.google.com/file/d/1GeIhUKVCZPHAOzb8jguj5OcDllh_bMbv/view?usp=sharing', '_blank');
     } 
+    else if (serviceType === "العمرة") {
+      Swal.fire({
+        title: `اختر الفئة المناسبة للتسجيل في ${serviceType}`,
+        html: `
+          <div class="icon-container">
+            <div class="icon-btn employee" onclick="showUmrahWarning('${serviceType}', 'employees')">
+              <i class="fa-solid fa-user-tie"></i>
+              <span>الموظفون</span>
+            </div>
+            <div class="icon-btn retired" onclick="showUmrahWarning('${serviceType}', 'retired')">
+              <i class="fa-solid fa-user-group"></i>
+              <span>المتقاعدون والأرامل</span>
+            </div>
+          </div>
+        `,
+        showConfirmButton: false
+      });
+    }
     else {
       Swal.fire({
         title: `اختر الفئة المناسبة للتسجيل في ${serviceType}`,
@@ -591,12 +608,82 @@
     });
   }
 
+  function showUmrahWarning(serviceType, category) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'تنبيه مهم - العمرة',
+      html: `
+        <div class="housing-alert">
+          <div class="alert-header">
+            <div class="alert-icon">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div>
+              <h4>تنبيه خاص بالعمرة</h4>
+              <p>يرجى قراءة الشروط التالية بعناية قبل المتابعة</p>
+            </div>
+          </div>
+          <ul class="alert-points">
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              العمرة تُمنح مرة واحدة فقط خلال المسار المهني للموظف.
+            </li>
+            <li>
+              <i class="fa-solid fa-user-slash"></i>
+              يستبعد تلقائياً كل مترشح سبق له الاستفادة من العمرة.
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-exclamation"></i>
+              أي تصريح غير صحيح للمعلومات يعتبر إدلاءً بمعلومات مغلوطة ويترتب عنه الإقصاء الفوري ودون إنذار.
+            </li>
+          </ul>
+          <div class="alert-note">
+            <i class="fa-solid fa-shield"></i>
+            <span>الاطلاع على هذه الشروط شرط أساسي قبل المرور إلى استمارة التسجيل.</span>
+          </div>
+          <label class="acknowledge-box">
+            <input type="checkbox" id="umrahAcknowledged">
+            <span>اطلعت عليه وأتحمل مسؤولية صحة المعلومات التي أصرح بها.</span>
+          </label>
+        </div>
+      `,
+      confirmButtonText: 'متابعة',
+      confirmButtonColor: '#1976d2',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      focusConfirm: false,
+      customClass: {
+        confirmButton: 'cairo-btn highlight-confirm'
+      },
+      didOpen: () => {
+        const checkbox = Swal.getPopup().querySelector('#umrahAcknowledged');
+        const confirmButton = Swal.getConfirmButton();
+        confirmButton.disabled = true;
+        checkbox.addEventListener('change', () => {
+          confirmButton.disabled = !checkbox.checked;
+        });
+      },
+      preConfirm: () => {
+        const checkbox = Swal.getPopup().querySelector('#umrahAcknowledged');
+        if (!checkbox || !checkbox.checked) {
+          Swal.showValidationMessage('يجب تأكيد الاطلاع قبل المتابعة');
+          return false;
+        }
+        return true;
+      }
+    }).then(result => {
+      if (result.isConfirmed) {
+        goToPage(serviceType, category);
+      }
+    });
+  }
+
   function goToPage(serviceType, category) {
     let link = '';
     if (serviceType === 'العمرة') {
       link = category === 'employees'
-        ? 'رابط_صفحة_العمرة_الموظفين.html'
-        : 'رابط_صفحة_العمرة_المتقاعدين.html';
+        ? 'employe_ins_omra.html'
+        : 'retraite_ins_omra.html';
     } else if (serviceType === 'الرحلات') {
       link = category === 'employees'
         ? 'employe_ins_voyage.html'
@@ -771,7 +858,6 @@
 
 </body>
 </html>
-
 
 
 
